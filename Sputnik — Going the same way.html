@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sputnik — Going the same way</title>
+<style>
+:root{--bg:#0f1b14;--card:#172a1e;--ink:#f3ecda;--mut:#a9b8a8;--acc:#d9693b;--acc2:#7ccf91;--gold:#e3b84a;--line:#2b4535;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4eee0;--card:#fcf9f1;--ink:#17291e;--mut:#5c6b5e;--acc:#b5421a;--acc2:#2f6b45;--gold:#a67c0c;--line:#e0d6bd}}
+:root[data-theme="light"]{--bg:#f4eee0;--card:#fcf9f1;--ink:#17291e;--mut:#5c6b5e;--acc:#b5421a;--acc2:#2f6b45;--gold:#a67c0c;--line:#e0d6bd}
+:root[data-theme="dark"]{--bg:#0f1b14;--card:#172a1e;--ink:#f3ecda;--mut:#a9b8a8;--acc:#d9693b;--acc2:#7ccf91;--gold:#e3b84a;--line:#2b4535}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+.w{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}.logo span{color:var(--gold)}.mark{display:block}.hero .mark{margin:0 auto 14px}
+nav a{text-decoration:none;color:var(--mut);margin-left:18px;font-size:14px}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:12px 20px;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.o{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.hero{padding:56px 0 40px;text-align:center}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:0 0 16px;letter-spacing:-1.5px}
+h1 em{font-style:normal;color:var(--acc)}
+.sub{color:var(--mut);max-width:620px;margin:0 auto 26px;font-size:18px}
+section{padding:44px 0}
+h2{font-size:30px;margin:0 0 8px;letter-spacing:-.5px}
+.lead{color:var(--mut);margin:0 0 24px;max-width:640px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--mut);font-size:14.5px}
+.ic{font-size:26px;margin-bottom:8px}
+.stats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 18px;min-width:130px}
+.stat b{display:block;font-size:24px;color:var(--gold)}.stat small{color:var(--mut)}
+.demo{display:grid;gap:16px;grid-template-columns:1fr 1.3fr}
+@media(max-width:760px){.demo{grid-template-columns:1fr}nav a{display:none}}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
+select,input[type=number],input[list]{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:15px}
+.chk{display:flex;gap:8px;align-items:center;margin-top:12px;color:var(--mut);font-size:14px}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--bg)}
+.opt.best{border-color:var(--acc2);box-shadow:0 0 0 1px var(--acc2) inset}
+.opt b{font-size:18px}.opt small{color:var(--mut);display:block}
+.tag{font-size:11px;background:var(--gold);color:var(--bg);border-radius:99px;padding:2px 8px;font-weight:700;margin-left:6px}
+.match{border:1px dashed var(--acc2);border-radius:14px;padding:14px;margin-top:6px}
+.row{display:flex;justify-content:space-between;padding:5px 0;font-size:14.5px;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.score{font-size:32px;font-weight:800;color:var(--gold)}
+.pz{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chip{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13.5px;background:var(--bg);color:var(--ink);cursor:pointer}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.steps{counter-reset:s;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.steps div{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:14.5px}
+.steps div:before{content:counter(s);display:block;font-weight:800;color:var(--acc);font-size:26px}
+.note{font-size:12.5px;color:var(--mut);margin-top:10px}
+.surge{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--acc2);width:0;transition:width .4s}
+.form{display:flex;gap:8px;flex-wrap:wrap}.form input{flex:1;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink);font-size:15px}
+.opt{cursor:pointer}.opt.sel{outline:2px solid var(--acc);outline-offset:1px}
+.det{margin:4px 0 14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.det svg{width:100%;height:auto;display:block;overflow:visible}.det .lg{cursor:pointer}
+.row.act{background:color-mix(in srgb,var(--acc) 14%,transparent);border-radius:8px;padding-left:8px;padding-right:8px}.row.sub{padding-left:18px;color:var(--mut);font-size:13px}
+.row.cl{cursor:pointer}.legend{font-size:12px;color:var(--mut);margin-top:6px}
+.mapw{display:block;width:100%;aspect-ratio:1.25;background:var(--bg);border:1px solid var(--line);border-radius:12px;margin-top:10px;touch-action:none;cursor:grab}
+footer{padding:36px 0;color:var(--mut);font-size:13.5px;border-top:1px solid var(--line);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="w">
+<nav><div class="logo"><svg class="mark" width="30" height="30" viewBox="0 0 100 100" role="img" aria-label="Sputnik logo"><path d="M72 22A34 34 0 1 0 80 62" fill="none" style="stroke:var(--gold)" stroke-width="4" stroke-linecap="round"/><g style="stroke:var(--acc2)" stroke-width="4" stroke-linecap="round"><line x1="56" y1="50" x2="12" y2="70"/><line x1="60" y1="56" x2="22" y2="82"/><line x1="65" y1="60" x2="40" y2="86"/></g><circle cx="70" cy="42" r="12" style="fill:var(--acc)"/></svg><div>sputnik<span>.</span></div></div><div><a href="#demo">Try it</a><a href="#split">Fair split</a><a href="#events">Events</a><a href="#safety">Safety</a><a class="btn" style="margin-left:18px;color:#fff" href="#join">Join waitlist</a></div></nav>
+
+<header class="hero"><svg class="mark" width="96" height="96" viewBox="0 0 100 100" role="img" aria-label="Sputnik logo"><path d="M72 22A34 34 0 1 0 80 62" fill="none" style="stroke:var(--gold)" stroke-width="4" stroke-linecap="round"/><g style="stroke:var(--acc2)" stroke-width="4" stroke-linecap="round"><line x1="56" y1="50" x2="12" y2="70"/><line x1="60" y1="56" x2="22" y2="82"/><line x1="65" y1="60" x2="40" y2="86"/></g><circle cx="70" cy="42" r="12" style="fill:var(--acc)"/></svg>
+<h1>Going the same way?<br><em>Split the ride.</em></h1>
+<p class="sub">Sputnik is the Bay Area's efficiency layer for getting around. Tell us where you're going — we find the cheapest smart option, and when sharing makes sense, we match you with someone whose trip lines up with yours.</p>
+<a class="btn" href="#demo">Try the demo</a> <a class="btn o" href="#how">How it works</a>
+<div class="stats">
+<div class="stat"><b id="c1">0</b><small>avg. saved per shared ride</small></div>
+<div class="stat"><b>~4 min</b><small>typical walk to a pickup zone</small></div>
+<div class="stat"><b>SF + Bay</b><small>launching here first</small></div>
+</div>
+</header>
+
+<section id="demo">
+<h2>Tell Sputnik where you're going</h2>
+<p class="lead">Sputnik compares every way to get there — then shows the match. Sputnik + Transit combines a shared ride, walking, Muni and BART. Fares and times are modeled estimates, not live.</p>
+<div class="demo">
+<div class="card">
+<label>From</label>
+<datalist id="nbl"></datalist><input id="from" list="nbl" autocomplete="off" placeholder="Search any SF neighborhood…" onfocus="this.select()">
+<label>To</label>
+<input id="to" list="nbl" autocomplete="off" placeholder="Search any SF neighborhood…" onfocus="this.select()">
+<label>Leave at</label>
+<select id="time"></select><label>Day</label><select id="day"><option value="wd">Weekday</option><option value="we">Weekend</option></select>
+<div class="chk"><input type="checkbox" id="surge"><label for="surge" style="margin:0">Surge pricing active (event / rush)</label></div>
+<label>Match preference</label>
+<select id="gp"><option>No preference</option><option>Women only</option><option>Men only</option></select>
+</div>
+<div class="card">
+<div id="opts"></div><div class="det" id="det"><div id="traj"></div><div id="bd"></div></div>
+<div class="match" id="match"></div>
+<p class="note" id="trail"></p>
+</div>
+</div>
+<div class="card" id="mapc" style="margin-top:16px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center"><b>Interactive map</b><span><button class="chip" onclick="zoom(.7)">＋</button> <button class="chip" onclick="zoom(1.4)">－</button> <button class="chip" onclick="fit();drawMap()">Fit route</button> <button class="chip" onclick="VW={x:0,y:60,w:1000,h:800};drawMap()">All SF</button></span></div><svg id="map" class="mapw" viewBox="0 60 1000 800" role="img" aria-label="Map of San Francisco with your route"></svg><div class="legend">Drag to pan, scroll to zoom. Tap a dot: 1st tap sets <b>From</b>, 2nd sets <b>To</b>. Rust = shared Uber · green = Muni · gold = BART · dotted = walking.</div><div style="margin-top:14px"><b>Muni routes</b> <span class="note">tap a line to see its info and stops</span></div><div class="pz" id="ri"></div><p class="note">21 Hayes is suspended (SFMTA points riders to the 6 Hayes-Parnassus), so it isn't routed. The K/L/M notice you pasted is the 2018 Twin Peaks tunnel closure, so I did not apply it.</p></div>
+</section>
+
+<section id="pz">
+<h2>Walk 4 minutes. Save $18.</h2>
+<p class="lead">Sputnik matches <i>compatible</i> trips, not identical ones. Pick a pickup zone — a short walk turns two strangers' trips into one shared ride, and keeps the meetup somewhere safe and well lit.</p>
+<div class="card">
+<div class="pz" id="zones"></div>
+<div id="zinfo" class="row"></div>
+</div>
+</section>
+
+<section id="split">
+<h2>The fair-split calculator</h2>
+<p class="lead">No 50/50 guesswork and no chasing strangers on Venmo. Sputnik blends an equal split with what each rider would have paid alone, and caps what you can ever be charged.</p>
+<div class="demo">
+<div class="card">
+<label>Rider A's solo fare ($)</label><input type="number" id="sa" value="38" min="1">
+<label>Rider B's solo fare ($)</label><input type="number" id="sb" value="31" min="1">
+<label>Actual shared ride total ($)</label><input type="number" id="st" value="43" min="1">
+<label>Authorization buffer above estimate (%)</label><input type="number" id="sbuf" value="20" min="0" max="100">
+</div>
+<div class="card" id="sout"></div>
+</div>
+</section>
+
+<section id="events">
+<h2>Own the event surge</h2>
+<p class="lead">10,000 people leave Chase Center at once. Sputnik clusters nearby riders heading the same direction.</p>
+<div class="card">
+<label>Event</label>
+<select id="ev"><option value="Warriors game|Chase Center|Marina|47|23|3">Warriors game</option><option value="Giants game|Oracle Park|Mission|39|19|4">Giants game</option><option value="Outside Lands|Golden Gate Park|SoMa|58|27|5">Outside Lands</option><option value="Dreamforce|Moscone|SFO|62|29|4">Dreamforce</option></select>
+<div id="evo" style="margin-top:14px"></div>
+</div>
+</section>
+
+<section id="how">
+<h2>How it works</h2>
+<div class="steps">
+<div><b>Tell us where</b><br>One tap. We compare Uber, shared, BART and walk + transit.</div>
+<div><b>See your match</b><br>Match score, walk time, pickup zone and savings, up front.</div>
+<div><b>Ride locked</b><br>Both riders confirm and authorize a capped share.</div>
+<div><b>One person books</b><br>Booking duty rotates. Sputnik deep-links the app with your route.</div>
+<div><b>Auto-settle</b><br>Your share is handled through a payments partner. No awkward asks.</div>
+</div>
+</section>
+
+<section>
+<h2>Everything in the box</h2>
+<div class="grid">
+<div class="card"><div class="ic">🧭</div><h3>Transport optimizer</h3><p>Compare solo ride, shared ride, transit and walk + transit on cost and time.</p></div>
+<div class="card"><div class="ic">🚶</div><h3>Walk-based matching</h3><p>Match nearby compatible trips with a small walk adjustment.</p></div>
+<div class="card"><div class="ic">📍</div><h3>Smart pickup zones</h3><p>Safe, easy meeting points instead of arbitrary street addresses.</p></div>
+<div class="card"><div class="ic">💯</div><h3>Visible match score</h3><p>See route overlap, timing and savings before you commit.</p></div>
+<div class="card"><div class="ic">⚖️</div><h3>Fair split</h3><p>Hybrid of equal and route-weighted shares, with the reason shown.</p></div>
+<div class="card"><div class="ic">🔒</div><h3>Authorization ceiling</h3><p>Costs jump past your cap? Both riders must approve first.</p></div>
+<div class="card"><div class="ic">🔁</div><h3>Rotating booker</h3><p>Booking duty rotates or is assigned by reliability.</p></div>
+<div class="card"><div class="ic">🎟️</div><h3>Event surge mode</h3><p>Group riders leaving the same venue at the same time.</p></div>
+<div class="card"><div class="ic">💸</div><h3>Savings tracker</h3><p>Personal and network totals: dollars saved, cars avoided.</p></div>
+<div class="card"><div class="ic">🚫</div><h3>Commitment fee</h3><p>Bail after the ride is booked and the stuck rider is compensated.</p></div>
+<div class="card"><div class="ic">🔌</div><h3>Provider-agnostic</h3><p>Built around ride quotes — Uber, Lyft, Waymo, taxis.</p></div>
+<div class="card"><div class="ic">🌉</div><h3>Bay Area first</h3><p>Built for SF's short trips, tolls, events and airport runs.</p></div>
+</div>
+</section>
+
+<section id="safety">
+<h2>Safety, built in</h2>
+<div class="grid">
+<div class="card"><h3>Verified riders</h3><p>Phone and email verified, with account age, trips completed and ratings.</p></div>
+<div class="card"><h3>Gender preference</h3><p>Match with women only, men only, or no preference. It works both ways.</p></div>
+<div class="card"><h3>Names after match</h3><p>Real names and photos revealed only after both sides agree.</p></div>
+<div class="card"><h3>Cancel, block, report</h3><p>Every report is reviewed. Phone numbers are never exchanged.</p></div>
+</div>
+</section>
+
+<section id="join" style="text-align:center">
+<h2>Be first in your neighborhood</h2>
+<p class="lead" style="margin:0 auto 18px">Join the Bay Area waitlist. Your first match is on us.</p>
+<div class="form" style="justify-content:center;max-width:520px;margin:0 auto"><input id="em" type="email" placeholder="you@email.com"><button class="btn" id="go">Join waitlist</button></div>
+<p class="note" id="jm"></p>
+</section>
+
+<footer>Sputnik is a peer-to-peer matching service. We don't run a driver fleet or book rides. Prices shown are illustrative estimates. Not affiliated with Uber or Lyft. © Sputnik</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const base={sfo:[34,22,11],chase:[22,14,4],oracle:[20,13,4],dt:[17,11,3]};
+const zonesBy={sfo:['Civic Center','Embarcadero','Marina','Mission & 16th'],chase:['Mission Bay','SoMa','Dogpatch'],oracle:['SoMa','Embarcadero','Mission'],dt:['Marina','Civic Center','Mission']};
+const money=n=>'$'+n.toFixed(2).replace(/\.00$/,'');
+const NB=[["Marina",37.8030,-122.4370],["Cow Hollow",37.7980,-122.4370],["Pacific Heights",37.7925,-122.4370],["Lower Pacific Heights",37.7875,-122.4350],["Presidio Heights",37.7880,-122.4500],["Laurel Heights",37.7860,-122.4480],["Presidio",37.7980,-122.4660],["Fort Mason",37.8060,-122.4300],["Russian Hill",37.8010,-122.4190],["Polk Gulch",37.7905,-122.4208],["Nob Hill",37.7930,-122.4150],["Fisherman's Wharf",37.8080,-122.4177],["North Beach",37.8060,-122.4100],["Telegraph Hill",37.8020,-122.4050],["Chinatown",37.7940,-122.4075],["Jackson Square",37.7967,-122.4025],["Financial District",37.7950,-122.3990],["Embarcadero / Ferry Bldg",37.7955,-122.3935],["Union Square",37.7880,-122.4075],["Tenderloin",37.7845,-122.4135],["Little Saigon (Larkin St)",37.7830,-122.4178],["Civic Center",37.7790,-122.4165],["Japantown",37.7855,-122.4295],["Western Addition",37.7810,-122.4330],["Hayes Valley",37.7765,-122.4240],["Alamo Square",37.7762,-122.4340],["NoPa",37.7767,-122.4388],["Lower Haight",37.7720,-122.4310],["Panhandle",37.7720,-122.4425],["Haight-Ashbury",37.7700,-122.4470],["Duboce Triangle",37.7690,-122.4330],["Cole Valley",37.7655,-122.4505],["Corona Heights",37.7650,-122.4388],["Castro",37.7609,-122.4350],["Eureka Valley",37.7580,-122.4370],["Twin Peaks",37.7515,-122.4470],["Noe Valley",37.7502,-122.4337],["Diamond Heights",37.7425,-122.4410],["Glen Park",37.7340,-122.4340],["Dolores Heights",37.7590,-122.4290],["Mission Dolores / Dolores Park",37.7610,-122.4270],["Mission District",37.7600,-122.4190],["Inner Mission (16th St)",37.7650,-122.4195],["Bernal Heights",37.7390,-122.4150],["Excelsior",37.7240,-122.4280],["Portola",37.7270,-122.4065],["Silver Terrace",37.7345,-122.3980],["Bayview",37.7300,-122.3850],["Hunters Point",37.7255,-122.3760],["Visitacion Valley",37.7150,-122.4050],["Crocker-Amazon",37.7090,-122.4390],["Ingleside / Balboa Park",37.7220,-122.4540],["Oceanview",37.7110,-122.4600],["Potrero Hill",37.7600,-122.4000],["Dogpatch",37.7580,-122.3885],["Mission Bay / Chase Center",37.7680,-122.3877],["Showplace Square",37.7670,-122.4040],["SoMa",37.7780,-122.4050],["Yerba Buena",37.7850,-122.4020],["East Cut / Transbay",37.7885,-122.3965],["Rincon Hill",37.7860,-122.3910],["South Beach / Oracle Park",37.7786,-122.3893],["UCSF Parnassus",37.7630,-122.4580],["Inner Sunset",37.7640,-122.4660],["West Portal",37.7405,-122.4655],["Forest Hill",37.7470,-122.4590],["Parkside",37.7415,-122.4850],["Central Sunset",37.7540,-122.4750],["Outer Sunset",37.7530,-122.4950],["Lone Mountain / USF",37.7770,-122.4505],["Inner Richmond",37.7800,-122.4600],["Little Russia (Clement St)",37.7830,-122.4650],["Central Richmond",37.7800,-122.4750],["Outer Richmond",37.7780,-122.4900],["Sea Cliff",37.7880,-122.4900],["SFO Airport",37.6160,-122.3925]];
+const ex=(nm,an)=>{nm=nm.split('|');const ix=nm.map((n,i)=>an[n]?i:-1).filter(i=>i>=0);return nm.map((n,i)=>{if(an[n])return [n,...an[n]];const a=ix.filter(j=>j<i).pop(),b=ix.find(j=>j>i),f=(i-a)/(b-a),pa=an[nm[a]],pb=an[nm[b]];return [n,pa[0]+(pb[0]-pa[0])*f,pa[1]+(pb[1]-pa[1])*f]})};
+// Stop names: SFMTA. Positions interpolated between anchor stops (approximate).
+const M19=["19","Polk","bus",8,15,ex("Galvez Ave & Robinson Ave|Donahue St & Innes Ave|Innes Ave & Earl St|Innes Ave & Arelious Walker Dr|Innes Ave & Griffith St|Innes Ave & Hunters Point Blvd|Middle Point Rd & Memory Lane|Middle Point Rd & Fairfax Ave|Middle Point Rd & Acacia Ave|Evans Ave & Keith St|Evans Ave/US Post Office|Evans Ave & Mendell St|Evans Ave & Newhall St|Evans Ave & Phelps St|Evans Ave & Quint St|Evans Ave & Selby St|Evans Ave & Marin St|Connecticut St & Cesar Chavez St|Connecticut St & 26th St|Connecticut St & 25th St|1095 Connecticut St|Wisconsin St & Connecticut St|Wisconsin St & 25th St|26th St & Wisconsin St|26th St & De Haro St|26th St & Rhode Island St|Kansas St & 26th St|Kansas St & 25th St|Kansas St & 23rd St|23rd St & Rhode Island St|De Haro St & 23rd St|De Haro St & 22nd St|De Haro St & Southern Heights Ave|De Haro St & 20th St|De Haro St & 19th St|De Haro St & 18th St|De Haro St & Mariposa St|De Haro St & 17th St|De Haro St & 16th St|Rhode Island St & 16th St|Rhode Island St & 15th St|Rhode Island St & Alameda St|Division St & Townsend St|Townsend St & 7th St|7th St & Brannan St|7th St & Bryant St|7th St & Harrison St|7th St & Folsom St|7th St & Howard St|7th St & Mission St|7th St & Market St|Market St & Hyde St|Larkin St & Grove St|Larkin St & McAllister St|Larkin St & Golden Gate Ave|Larkin St & Eddy St|Larkin St & O'Farrell St|Geary St & Larkin St|Polk St & Post St|Polk St & Pine St|Polk St & Sacramento St|Polk St & Washington St|Polk St & Broadway|Polk St & Union St|Polk St & Lombard St|Polk St & Francisco St|North Point St & Polk St|Larkin St & Beach St|Beach St & Larkin St",{"Galvez Ave & Robinson Ave":[37.7255,-122.3740],"Donahue St & Innes Ave":[37.7294,-122.3752],"Innes Ave & Hunters Point Blvd":[37.7313,-122.3836],"Middle Point Rd & Acacia Ave":[37.7350,-122.3870],"Evans Ave & Keith St":[37.7388,-122.3868],"Evans Ave & Marin St":[37.7430,-122.3960],"Connecticut St & Cesar Chavez St":[37.7490,-122.3975],"26th St & De Haro St":[37.7478,-122.4010],"Kansas St & 23rd St":[37.7535,-122.4030],"De Haro St & 16th St":[37.7650,-122.4015],"Division St & Townsend St":[37.7710,-122.4025],"7th St & Folsom St":[37.7767,-122.4078],"7th St & Market St":[37.7803,-122.4123],"Market St & Hyde St":[37.7810,-122.4148],"Larkin St & McAllister St":[37.7802,-122.4168],"Larkin St & Eddy St":[37.7836,-122.4172],"Geary St & Larkin St":[37.7863,-122.4176],"Polk St & Post St":[37.7878,-122.4202],"Polk St & Sacramento St":[37.7915,-122.4215],"Polk St & Broadway":[37.7958,-122.4222],"Polk St & Lombard St":[37.8020,-122.4235],"North Point St & Polk St":[37.8057,-122.4240],"Beach St & Larkin St":[37.8062,-122.4235]}),
+{hw:{wd:[15,15,15],we:[20,20,20]},hrs:"5 a.m. – 10 p.m. daily",fq:"Weekday every 15 min · Weekend every 20 min (no late-night or Owl)",nb:"Bayview / Hunters Point · Bernal Heights · Downtown / Civic Center · Marina · Mission · Nob Hill · North Beach · Pacific Heights · Potrero Hill · Russian Hill · SoMa · Western Addition"}];
+const M33=["33","Ashbury/18th","bus",8,20,ex("25th St & Potrero Ave|Hampshire St & 24th St|Potrero Ave & 24th St|SF General Hospital|Potrero Ave & 21st St|Potrero Ave & 19th St|Potrero Ave & Mariposa St|16th St & Potrero Ave|16th St & Bryant St|16th St & Folsom St|Mission St & 16th St|18th St & Mission St|18th St & Valencia St|18th St & Guerrero St|18th St & Dolores St|18th St & Church St|18th St & Sanchez St|18th St & Noe St|18th St & Castro St|18th St & Eureka St|18th St & Hattie St|18th St & Danvers St|18th St & Market St|Clayton St & Market St|Clayton St & Corbett Ave|Clayton St & Deming St|Ashbury St & Clayton St|Ashbury St & Clifford Ter|Ashbury St & Piedmont St|Ashbury St & Frederick St|Ashbury St & Waller St|Ashbury St & Haight St|Haight St & Clayton St|Haight St & Stanyan St|Stanyan St & Oak St|Stanyan St & Hayes St|Fulton St & Stanyan St|Arguello Blvd & Fulton St|Arguello Blvd & Turk St|Arguello Blvd & Geary Blvd|Arguello Blvd & Euclid Ave|Arguello Blvd & California St|Sacramento St & Cherry St",{"25th St & Potrero Ave":[37.7510,-122.4066],"SF General Hospital":[37.7556,-122.4067],"Potrero Ave & Mariposa St":[37.7632,-122.4070],"16th St & Potrero Ave":[37.7656,-122.4069],"16th St & Folsom St":[37.7660,-122.4140],"Mission St & 16th St":[37.7651,-122.4197],"18th St & Mission St":[37.7620,-122.4195],"18th St & Castro St":[37.7600,-122.4350],"Clayton St & Market St":[37.7642,-122.4426],"Ashbury St & Clayton St":[37.7634,-122.4472],"Ashbury St & Haight St":[37.7700,-122.4469],"Haight St & Stanyan St":[37.7695,-122.4530],"Fulton St & Stanyan St":[37.7728,-122.4540],"Arguello Blvd & Fulton St":[37.7730,-122.4590],"Arguello Blvd & Geary Blvd":[37.7814,-122.4590],"Arguello Blvd & California St":[37.7845,-122.4588],"Sacramento St & Cherry St":[37.7872,-122.4515]}),
+{hw:{wd:[20,20,20],we:[30,20,20]},hrs:"5 a.m. – 10 p.m. daily",fq:"Weekday every 20 min · Weekend every 30 min morning, 20 min midday/evening (no late-night or Owl)",nb:"Bayview / Hunters Point · Bernal Heights · Castro / Upper Market · Golden Gate Park · Inner Richmond · Inner Sunset · Mission · Noe Valley · Potrero Hill · Presidio · Presidio Heights · SoMa · Twin Peaks · Haight Ashbury"}];
+const BS=[["Embarcadero",37.7929,-122.3969,0],["Montgomery St",37.7894,-122.4013,2],["Powell St",37.7844,-122.4079,4],["Civic Center",37.7797,-122.4138,6],["16th St Mission",37.7651,-122.4197,9],["24th St Mission",37.7524,-122.4184,11],["Glen Park",37.7331,-122.4339,15],["Balboa Park",37.7217,-122.4474,18],["Daly City",37.7060,-122.4691,21],["SFO",37.6160,-122.3925,33]];
+// id, name, type, mph (incl. stops), headway min, stops [name,lat,lng]
+const ML=[["22","Fillmore","bus",8.5,8,[["Fillmore & Chestnut",37.8003,-122.4360],["Fillmore & Union",37.7977,-122.4337],["Fillmore & Sacramento",37.7892,-122.4340],["Fillmore & Geary",37.7839,-122.4331],["Haight & Fillmore",37.7722,-122.4304],["Church & 16th",37.7647,-122.4288],["16th & Mission",37.7651,-122.4197],["16th & Potrero",37.7656,-122.4069],["16th & 3rd",37.7667,-122.3897]]],
+["14","Mission","bus",8.5,6,[["Mission & Fremont",37.7897,-122.3964],["Mission & 4th",37.7855,-122.4044],["Mission & 16th",37.7651,-122.4197],["Mission & 24th",37.7524,-122.4184],["Mission & Cesar Chavez",37.7482,-122.4189]]],
+["49","Van Ness/Mission","bus",9,8,[["Van Ness & North Point",37.8052,-122.4247],["Van Ness & Union",37.7983,-122.4243],["Van Ness & Geary",37.7867,-122.4226],["Van Ness & Market",37.7753,-122.4195],["South Van Ness & 16th",37.7655,-122.4170],["Mission & 24th",37.7524,-122.4184]]],
+["38","Geary","bus",9,5,[["Geary & Powell",37.7872,-122.4080],["Geary & Van Ness",37.7857,-122.4224],["Geary & Fillmore",37.7840,-122.4331],["Geary & Masonic",37.7821,-122.4469],["Geary & Arguello",37.7814,-122.4590],["Geary & 25th Ave",37.7798,-122.4840],["Geary & 33rd Ave",37.7792,-122.4940]]],
+["1","California","bus",8,7,[["California & Drumm",37.7950,-122.3965],["California & Montgomery",37.7934,-122.4030],["California & Powell",37.7922,-122.4106],["California & Van Ness",37.7907,-122.4225],["California & Fillmore",37.7880,-122.4335],["California & Arguello",37.7847,-122.4590]]],
+["24","Divisadero","bus",8.5,9,[["Divisadero & Sacramento",37.7900,-122.4400],["Divisadero & Hayes",37.7746,-122.4375],["Haight & Divisadero",37.7712,-122.4375],["Castro & Market",37.7623,-122.4350],["24th & Castro",37.7512,-122.4332]]],
+["5","Fulton","bus",8.5,8,[["McAllister & Larkin",37.7803,-122.4170],["McAllister & Divisadero",37.7778,-122.4385],["Fulton & Masonic",37.7745,-122.4466],["Fulton & Arguello",37.7730,-122.4590],["Fulton & 25th Ave",37.7731,-122.4856]]],
+["7","Haight-Noriega","bus",8.5,9,[["Market & 5th",37.7838,-122.4070],["Haight & Octavia",37.7737,-122.4234],["Haight & Fillmore",37.7722,-122.4304],["Haight & Masonic",37.7704,-122.4466],["9th & Lincoln",37.7657,-122.4663],["Noriega & 32nd Ave",37.7542,-122.4915]]],
+["N","Judah","metro",11,9,[["4th & King (Caltrain)",37.7764,-122.3943],["2nd & King",37.7790,-122.3910],["Embarcadero Stn",37.7929,-122.3969],["Montgomery Stn",37.7894,-122.4013],["Powell Stn",37.7844,-122.4079],["Civic Center Stn",37.7797,-122.4138],["Church & Duboce",37.7693,-122.4291],["Carl & Cole",37.7656,-122.4498],["9th & Irving",37.7643,-122.4660],["Judah & 46th Ave",37.7607,-122.5068]]],
+["J","Church","metro",10.5,9,[["Embarcadero Stn",37.7929,-122.3969],["Powell Stn",37.7844,-122.4079],["Civic Center Stn",37.7797,-122.4138],["Church & Duboce",37.7693,-122.4291],["Church & 16th",37.7647,-122.4288],["Church & 24th",37.7518,-122.4280],["Balboa Park Stn",37.7217,-122.4474]]],
+["T","Third","metro",10,10,[["Chinatown Stn",37.7943,-122.4072],["Union Square Stn",37.7878,-122.4071],["Moscone Stn",37.7840,-122.4030],["4th & King (Caltrain)",37.7762,-122.3942],["3rd & 18th (Chase Ctr)",37.7620,-122.3886],["3rd & 22nd",37.7575,-122.3881]]],M19,M33];
+const ICON={walk:'🚶',uber:'🚗',bus:'🚌',metro:'🚋',bart:'🚇'};
+const gm=(a,b)=>`https://www.google.com/maps/dir/?api=1&origin=${a.lat},${a.lng}&destination=${b.lat},${b.lng}&travelmode=walking`;
+$('nbl').innerHTML=NB.map(n=>`<option value="${n[0]}">`).join('');$('from').value='Little Russia (Clement St)';$('to').value='Chinatown';const nbi=v=>{v=v.trim().toLowerCase();const i=NB.findIndex(n=>n[0].toLowerCase()==v);return i<0&&v?NB.findIndex(n=>n[0].toLowerCase().includes(v)):i};
+$('time').innerHTML=['7:30 AM','8:15 AM','1:00 PM','5:45 PM','10:30 PM'].map(t=>`<option>${t}</option>`).join('');
+let O=[],sel=1,sl=-1,S=1,V=[],adj=[],MI=[],BI=[];
+const pp=l=>{if(l.sg){const ids=l.sg[0]<0?BI:MI[l.sg[0]],x=l.sg[1],y=l.sg[2];return (x<y?ids.slice(x,y+1):ids.slice(y,x+1).reverse()).map(i=>[V[i].lat,V[i].lng])}return [[l.a.lat,l.a.lng],[l.b.lat,l.b.lng]]};
+const hv=(a,b)=>{const r=Math.PI/180,x=(b.lng-a.lng)*r*Math.cos((a.lat+b.lat)*r/2),y=(b.lat-a.lat)*r;return 3959*Math.sqrt(x*x+y*y)};
+function build(a,b,per){
+ const hm=[1,1.4,1.2,2.2][per],sp=[.85,1,.85,1.15][per],us=[9,12,9,16][per],bw=[2.5,4,3,6][per],sw=[7,9,8,12][per],WK=$('day').value;
+ V=[{n:a[0],lat:a[1],lng:a[2]},{n:b[0],lat:b[1],lng:b[2]}];adj=[[],[]];
+ const bi=BS.map(s=>{V.push({n:s[0]+' BART',lat:s[1],lng:s[2],t:s[3]});adj.push([]);return V.length-1});
+ const mi=ML.map(l=>l[5].map(w=>{V.push({n:w[0],lat:w[1],lng:w[2]});adj.push([]);return V.length-1}));
+ const N=V.length;MI=mi;BI=bi;
+ for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const d=hv(V[i],V[j])*1.3;if(d<=.9&&!(i==0&&j==1)){adj[i].push({to:j,ty:'walk',t:d*20,c:0,mi:d});adj[j].push({to:i,ty:'walk',t:d*20,c:0,mi:d})}}
+ bi.forEach((i,x)=>bi.forEach((j,y)=>{if(i==j)return;const ap=V[i].n.startsWith('SFO')||V[j].n.startsWith('SFO'),dc=V[i].n.startsWith('Daly')||V[j].n.startsWith('Daly');adj[i].push({to:j,ty:'bart',t:Math.abs(V[i].t-V[j].t)+(ap?sw:bw),c:ap?11.15:dc?3.35:2.55,nst:Math.abs(x-y),sg:[-1,x,y]})}));
+ ML.forEach((l,li)=>{const ids=mi[li],F=l[6];if(F&&per==3)return;const hw=F?F.hw[WK][Math.min(per,2)]:l[4];ids.forEach((u,x)=>ids.forEach((v,y)=>{if(x==y)return;let d=0;for(let k=Math.min(x,y);k<Math.max(x,y);k++)d+=hv(V[ids[k]],V[ids[k+1]])*1.15;adj[u].push({to:v,ty:l[2],t:(F?hw:hw*hm)/2+d/(l[3]*sp)*60,c:3,id:l[0],lab:l[0]+' '+l[1],nst:Math.abs(x-y),sg:[li,x,y]})}))});
+ for(let i=0;i<N;i++)for(let j=0;j<N;j++){if(i==j||!(i==0||j==1)||i==1||j==0)continue;const d=hv(V[i],V[j])*1.3;if(d<.7||d>8.5)continue;const m=d/(us*Math.min(1+d/8,1.9))*60,ap=V[i].n.startsWith('SFO')||V[j].n.startsWith('SFO'),full=(Math.max(8,6+1.5*d+.4*m)+(ap?5.5:0))*S;adj[i].push({to:j,ty:'uber',t:m+4,c:full*.55,full,mi:d})}
+ return {us};
+}
+function route(w){
+ const NS=V.length*8,D=Array(NS).fill(1e9),P=Array(NS).fill(null),dn=Array(NS).fill(false);D[0]=0;let g=-1;
+ for(;;){let u=-1,b=1e9;for(let k=0;k<NS;k++)if(!dn[k]&&D[k]<b){b=D[k];u=k}
+  if(u<0)break;dn[u]=true;const n=u>>3,m=u&7;if(n==1&&(m&1)&&(m&6)){g=u;break}
+  for(const e of adj[n]){let nm=m,c=e.c;if(e.ty=='uber'){if(m&1)continue;nm|=1}else if(e.ty=='bus'||e.ty=='metro'){if(m&2)c=0;nm|=2}else if(e.ty=='bart'){nm|=4}
+   const v=e.to*8+nm,nd=D[u]+e.t+w*c;if(nd<D[v]){D[v]=nd;P[v]=[u,e,c]}}}
+ if(g<0)return null;
+ let raw=[],k=g;while(P[k]){const [p,e,c]=P[k];raw.unshift({m:e.ty,e,c,min:e.t,mi:e.mi||0,from:V[p>>3].n,to:V[e.to].n,a:V[p>>3],b:V[e.to],sg:e.sg});k=p}
+ const L=[];raw.forEach(l=>{const q=L[L.length-1];if(l.m=='walk'&&q&&q.m=='walk'){q.min+=l.min;q.mi+=l.mi;q.to=l.to;q.b=l.b}else L.push(l)});
+ const legs=L.filter(l=>!(l.m=='walk'&&l.min<1)).map(l=>({...l,t:l.m=='walk'?'Walk':l.m=='uber'?'Shared Uber (Sputnik)':l.m=='bart'?'BART':l.e.lab,id:l.e.id||(l.m=='bart'?'BART':''),pts:pp(l),full:l.e.full,f:.55}));
+ return {legs,sig:legs.map(l=>l.m+l.to).join('>')};
+}
+function plan(){
+ const ia=nbi($('from').value),ib=nbi($('to').value);if(ia<0||ib<0){$('opts').innerHTML='<p class="note">Type or pick a neighborhood from the list (e.g. Little Saigon, Silver Terrace, Chinatown).</p>';$('det').style.display='none';return}const A=NB[ia],B=NB[ib],ti=$('time').value,per=/7:30|8:15/.test(ti)?0:/1:00/.test(ti)?1:/5:45/.test(ti)?2:3;S=$('surge').checked?1.5:1;
+ if(ia==ib){$('opts').innerHTML='<p class="note">Pick two different neighborhoods.</p>';$('det').style.display='none';return}
+ $('det').style.display='';const {us}=build(A,B,per);
+ const road=hv(V[0],V[1])*1.3,m=road/(us*Math.min(1+road/8,1.9))*60,ap=B[0].startsWith('SFO')||A[0].startsWith('SFO'),solo=(Math.max(8,6+1.5*road+.4*m)+(ap?5.5:0))*S;
+ const U=(t,min,c,f)=>({m:'uber',t,min,c,full:solo,f,mi:road,from:A[0],to:B[0],a:V[0],b:V[1],id:''});
+ O=[{i:'🚗',n:'Uber alone',legs:[U('Uber',m+3,solo,1)]},{i:'🤝',n:'Uber + Sputnik (direct)',legs:[{m:'walk',t:'Walk to pickup zone',min:3,c:0,mi:.15,from:A[0],to:'Pickup zone'},{...U('Shared Uber (2 riders)',m+7,solo*.55,.55),from:'Pickup zone'}]}];
+ const rs=[],seen={};[.25,1,3].forEach(w=>{const r=route(w);if(r&&!seen[r.sig]){seen[r.sig]=1;rs.push(r)}});
+ rs.forEach(r=>{r.min=r.legs.reduce((x,l)=>x+l.min,0);r.cost=r.legs.reduce((x,l)=>x+l.c,0)});
+ const fm=Math.min(...rs.map(r=>r.min)),fc=Math.min(...rs.map(r=>r.cost));
+ rs.forEach(r=>O.push({i:'🔗',n:'Sputnik + Transit',tag:rs.length>1?(r.min==fm?'FASTEST':r.cost==fc?'CHEAPEST':'BALANCED'):'',legs:r.legs}));
+ if(road<=1.6)O.push({i:'🚶',n:'Walk',legs:[{m:'walk',t:'Walk',min:road*20,c:0,mi:road,from:A[0],to:B[0],a:V[0],b:V[1]}]});
+ O.forEach(o=>{o.cost=o.legs.reduce((x,l)=>x+l.c,0);o.min=o.legs.reduce((x,l)=>x+l.min,0)});
+ if(sel>=O.length)sel=1;
+ let bi=-1,bs=1e9;O.forEach((o,i)=>{if(o.legs.length==1&&o.legs[0].m=='walk')return;const s=o.cost+.25*o.min;if(s<bs){bs=s;bi=i}});
+ $('opts').innerHTML=O.map((o,i)=>`<div class="opt ${i==bi?'best':''} ${i==sel?'sel':''}" onclick="sel=${i};sl=-1;plan()"><div>${o.i} <b>${o.n}</b>${o.tag?`<span class="tag">${o.tag}</span>`:''}<small>${Math.round(o.min)} min · ${o.legs.map(l=>ICON[l.m]).join('')}</small></div><b>${o.cost?'~'+money(o.cost):'Free'}</b></div>`).join('');
+ detail();
+ let hub=BS[0],hd=9;BS.forEach(s=>{const d=hv({lat:s[1],lng:s[2]},V[0]);if(d<hd){hd=d;hub=s}});
+ const sh=O[1].cost,save=solo-sh,sc=Math.round(86+Math.random()*10),pz=hd<1?'near '+hub[0]+' BART':A[0]+' pickup zone';
+ $('match').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div><b>Match found</b><br><small style="color:var(--mut)">2 compatible riders · ${$('gp').value.toLowerCase()}</small></div><div class="score">${sc}%</div></div>
+ <div class="row"><span>Trip</span><span>${A[0]} → ${B[0]}, ${ti}</span></div>
+ <div class="row"><span>Pickup</span><span>🚶 ${2+Math.floor(Math.random()*4)} min · ${pz}</span></div>
+ <div class="row"><span>Your share (direct)</span><span>~${money(sh)}</span></div>
+ <div class="row"><span>You save</span><b style="color:var(--acc2)">~${money(save)}</b></div>
+ <div class="row"><span>Max you'll be charged</span><span>${money(sh*1.2)}</span></div>
+ <div style="margin-top:10px;display:flex;gap:8px"><button class="btn" onclick="this.textContent='Ride locked ✓'">Match</button><button class="btn o" onclick="plan()">See another</button></div>`;
+ $('trail').textContent='Routes use real SF street geography, BART lines and 11 Muni routes. Walk distances are straight-line ×1.3 (street/hill factor), not live Google Maps. Fares are 2026 estimates; schedules are headway-based, not live GTFS.';
+ $('c1').textContent=money(save);fit();drawMap();ri();
+}
+function pick(i){sl=sl==i?-1:i;detail();drawMap()}
+function detail(){
+ const o=O[sel],ls=o.legs,nodes=[ls[0].from,...ls.map(l=>l.to)],n=nodes.length,X=i=>50+i*(540/(n-1)),mc=Math.max(8,Math.floor(540/(n-1)/6.4));
+ let svg=`<svg viewBox="0 0 640 120" role="img" aria-label="Trip route">`;
+ ls.forEach((l,i)=>{const x1=X(i),x2=X(i+1),mx=(x1+x2)/2,col=l.m=='uber'?'var(--acc)':l.m=='walk'?'var(--mut)':'var(--acc2)';
+  svg+=`<g class="lg" onclick="pick(${i})"><line x1="${x1}" x2="${x2}" y1="60" y2="60" style="stroke:transparent" stroke-width="30"/><line x1="${x1}" x2="${x2}" y1="60" y2="60" style="stroke:${col}" stroke-width="${i==sl?9:l.m=='bart'?7:5}" stroke-linecap="round" ${l.m=='walk'?'stroke-dasharray="1 10"':''}/><text x="${mx}" y="38" text-anchor="middle" font-size="${n>5?14:18}">${ICON[l.m]}${l.id?' '+l.id:''}</text><text x="${mx}" y="84" text-anchor="middle" font-size="11" style="fill:var(--ink)">${Math.round(l.min)} min · ${l.c?money(l.c):'free'}</text></g>`});
+ nodes.forEach((t,i)=>{svg+=`<circle cx="${X(i)}" cy="60" r="6" style="fill:var(--card);stroke:var(--ink)" stroke-width="2"/><text x="${X(i)}" y="108" text-anchor="middle" font-size="10" style="fill:var(--mut)">${t.length>mc?t.slice(0,mc-1)+'…':t}</text>`});
+ svg+=`<circle r="5" style="fill:var(--ink)"><animateMotion dur="${Math.max(5,n*2)}s" repeatCount="indefinite" path="M50 60 H590"/></circle></svg><div class="legend">Tap a leg to highlight it.</div>`;
+ $('traj').innerHTML=svg;
+ let r=`<div style="margin-top:10px"><b>${o.i} ${o.n} — legs & price</b></div>`;
+ ls.forEach((l,i)=>{
+  const sub=l.m=='walk'?`${l.mi.toFixed(2)} mi`:l.m=='uber'?`${l.mi.toFixed(1)} mi`:l.nst?`${l.nst} stop${l.nst>1?'s':''}`:'';
+  r+=`<div class="row cl ${i==sl?'act':''}" onclick="pick(${i})"><span>${ICON[l.m]} ${l.t}<small style="display:block;color:var(--mut)">${l.from} → ${l.to} · ${Math.round(l.min)} min${sub?' · '+sub:''}</small></span><b>${l.c?money(l.c):'$0'}</b></div>`;
+  if(l.m=='walk'&&l.a&&l.b&&(sl==i))r+=`<div class="row sub"><a href="${gm(l.a,l.b)}" target="_blank" rel="noopener">Open this walk in Google Maps ↗</a><span></span></div>`;
+  if(l.m=='uber'&&(sl==i||ls.length<3)){const p0=l.full/S,f=l.f;[['Base + booking',.15],['Distance',.5],['Time',.2],['Fees / airport',.15]].forEach(x=>r+=`<div class="row sub"><span>${x[0]}</span><span>${money(p0*x[1]*f)}</span></div>`);if(S>1)r+=`<div class="row sub"><span>Surge (1.5×)</span><span>${money((S-1)*p0*f)}</span></div>`;if(f<1)r+=`<div class="row sub"><span>Your ${Math.round(f*100)}% share of ${money(l.full)}</span><span></span></div>`}
+ });
+ const d=O[0].cost-o.cost,dm=Math.round(o.min-O[0].min);
+ r+=`<div class="row"><b>Total</b><b>${money(o.cost)} · ${Math.round(o.min)} min</b></div><div class="row"><span>vs. Uber alone</span><b style="color:${d>0?'var(--acc2)':'var(--acc)'}">${d>0?'save '+money(d):d<0?'+'+money(-d):'—'}, ${dm>0?'+':''}${dm} min</b></div>`;
+ if(ls.some(l=>l.m=='bus'||l.m=='metro'))r+=`<p class="note">Muni $3.00 covers free transfers for 2 hours, so it's charged once. Times include estimated waits.</p>`;
+ $('bd').innerHTML=r;
+}
+const P=(la,ln)=>[(ln+122.52)*6320,(37.822-la)*8000];
+const COAST=[[37.8105,-122.4770],[37.8085,-122.4660],[37.8065,-122.4500],[37.8070,-122.4380],[37.8065,-122.4290],[37.8085,-122.4200],[37.8100,-122.4110],[37.8090,-122.4020],[37.7960,-122.3925],[37.7860,-122.3880],[37.7780,-122.3870],[37.7700,-122.3850],[37.7550,-122.3830],[37.7400,-122.3790],[37.7300,-122.3720],[37.7150,-122.3720],[37.7080,-122.3830],[37.7080,-122.5030],[37.7300,-122.5070],[37.7600,-122.5110],[37.7800,-122.5130],[37.7860,-122.5100],[37.7900,-122.5020],[37.7940,-122.4880],[37.8000,-122.4800]];
+let VW={x:0,y:60,w:1000,h:800},FOCUS=-1,dr=null,mv=0,nextFrom=true;
+const mp=$('map');
+function fit(){const q=[];O[sel].legs.forEach(l=>(l.pts||[]).forEach(p=>q.push(P(p[0],p[1]))));if(!q.length)return;const xs=q.map(p=>p[0]),ys=q.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);let w=Math.max(x1-x0+120,260),h=Math.max(y1-y0+120,208);if(w/h>1.25)h=w/1.25;else w=h*1.25;VW={x:(x0+x1)/2-w/2,y:(y0+y1)/2-h/2,w,h}}
+function zoom(f,e){const r=mp.getBoundingClientRect(),fx=e?(e.clientX-r.left)/r.width:.5,fy=e?(e.clientY-r.top)/r.height:.5,w=Math.min(1000,Math.max(120,VW.w*f)),h=w/1.25;VW={x:VW.x+(VW.w-w)*fx,y:VW.y+(VW.h-h)*fy,w,h};drawMap()}
+function mapPick(i){if(mv>6)return;$(nextFrom?'from':'to').value=NB[i][0];nextFrom=!nextFrom;plan()}
+function drawMap(){
+ const k=VW.w/1000,px=k*1.4,pl=(a,o)=>a.map(p=>P(p[o],p[o+1]).map(v=>v.toFixed(0)).join(',')).join(' ');
+ const poly=a=>a.map(p=>P(p[0],p[1]).map(v=>v.toFixed(0)).join(',')).join(' ');
+ let s=`<polygon points="${poly(COAST)}" style="fill:var(--card);stroke:var(--line)" stroke-width="${2*px}"/>`;
+ ML.forEach((l,i)=>{const on=FOCUS==i;s+=`<polyline points="${pl(l[5],1)}" fill="none" style="stroke:${l[2]=='metro'?'var(--acc2)':'var(--mut)'}" stroke-opacity="${on?1:.4}" stroke-width="${(on?4:1.4)*px}" stroke-linejoin="round"/>`});
+ s+=`<polyline points="${pl(BS,1)}" fill="none" style="stroke:var(--gold)" stroke-width="${3*px}" stroke-opacity=".8"/>`;
+ BS.forEach(b=>{const [x,y]=P(b[1],b[2]);s+=`<circle cx="${x}" cy="${y}" r="${3*px}" style="fill:var(--gold)"><title>${b[0]} BART</title></circle>`});
+ if(FOCUS>=0)ML[FOCUS][5].forEach(t=>{const [x,y]=P(t[1],t[2]);s+=`<circle cx="${x}" cy="${y}" r="${2.2*px}" style="fill:var(--acc2)"><title>${ML[FOCUS][0]}: ${t[0]}</title></circle>`});
+ NB.forEach((n,i)=>{const [x,y]=P(n[1],n[2]);s+=`<circle cx="${x}" cy="${y}" r="${4.5*px}" style="fill:var(--ink);fill-opacity:.55;cursor:pointer" onclick="mapPick(${i})"><title>${n[0]}</title></circle>`;if(k<.5)s+=`<text x="${x+6*px}" y="${y+3*px}" font-size="${11*px}" style="fill:var(--mut);paint-order:stroke;stroke:var(--bg);stroke-width:${3*px}px;pointer-events:none">${n[0].split(' (')[0]}</text>`});
+ const L=O[sel].legs;
+ L.forEach((l,i)=>{if(!l.pts)return;const col=l.m=='uber'?'var(--acc)':l.m=='walk'?'var(--mut)':l.m=='bart'?'var(--gold)':'var(--acc2)';s+=`<polyline points="${poly(l.pts)}" fill="none" style="stroke:${col}" stroke-width="${(i==sl?7:4.5)*px}" stroke-linecap="round" stroke-linejoin="round" ${l.m=='walk'?`stroke-dasharray="${.5*px} ${8*px}"`:''}/>`});
+ [[V[0],'var(--acc2)'],[V[1],'var(--acc)']].forEach(([v,c])=>{const [x,y]=P(v.lat,v.lng);s+=`<circle cx="${x}" cy="${y}" r="${9*px}" style="fill:${c};stroke:var(--ink)" stroke-width="${2*px}"/><text x="${x+12*px}" y="${y-8*px}" font-size="${13*px}" font-weight="700" style="fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:${4*px}px">${v.n.split(' (')[0]}</text>`});
+ mp.setAttribute('viewBox',`${VW.x} ${VW.y} ${VW.w} ${VW.h}`);mp.innerHTML=s;
+}
+function ri(){
+ let h=ML.map((l,i)=>`<button class="chip ${FOCUS==i?'on':''}" onclick="FOCUS=FOCUS==${i}?-1:${i};ri();drawMap()">${l[0]}</button>`).join('');
+ if(FOCUS>=0){const l=ML[FOCUS],F=l[6];h+=`<div class="det" style="margin-top:10px"><b>${l[0]} ${l[1]}</b> <span class="note">${l[2]=='metro'?'Muni Metro':'Muni bus'}</span>${F?`<div class="row"><span>Hours</span><span>${F.hrs}</span></div><div class="row"><span>Frequency</span><span style="text-align:right">${F.fq}</span></div><div class="row"><span>Neighborhoods</span><span style="text-align:right;max-width:70%">${F.nb}</span></div><div class="note" style="max-height:130px;overflow:auto"><b>${l[5].length} stops (SFMTA):</b> ${l[5].map(t=>t[0]).join(' · ')}</div><p class="note">Stop names are SFMTA's; map positions are interpolated between key stops, so treat them as approximate. Inbound and outbound stops are merged.</p>`:`<div class="row"><span>Frequency</span><span>~every ${l[4]} min (modeled)</span></div><p class="note">Key stops only. Send me this line's SFMTA stop list to add every stop.</p>`}</div>`}
+ $('ri').innerHTML=h;
+}
+mp.addEventListener('pointerdown',e=>{dr={x:e.clientX,y:e.clientY};mv=0});
+addEventListener('pointermove',e=>{if(!dr)return;const s=VW.w/mp.clientWidth,dx=e.clientX-dr.x,dy=e.clientY-dr.y;mv+=Math.abs(dx)+Math.abs(dy);if(mv>3){VW.x-=dx*s;VW.y-=dy*s;dr={x:e.clientX,y:e.clientY};drawMap()}});
+addEventListener('pointerup',()=>{dr=null});
+mp.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.2:.83,e)},{passive:false});
+['from','to','time','day','surge','gp'].forEach(i=>$(i).addEventListener('change',plan));
+plan();
+
+let zi=0;
+function zones(){
+ const zs=['Civic Center','Embarcadero','Marina','Mission & 16th','Mission Bay','SoMa'];
+ $('zones').innerHTML=zs.map((z,i)=>`<button class="chip ${i==zi?'on':''}" onclick="zi=${i};zones()">${z}</button>`).join('');
+ const m=[3,5,4,3,6,4][zi],r=[12,9,14,11,8,13][zi];
+ $('zinfo').innerHTML=`<span>📍 ${zs[zi]}</span><span>🚶 ${m} min walk · ${r} riders nearby right now (demo)</span>`;
+}
+zones();
+
+function split(){
+ const a=+$('sa').value||0,b=+$('sb').value||0,t=+$('st').value||0,buf=+$('sbuf').value||0;
+ if(a+b<=0){return}
+ const eq=t/2,pa=t*a/(a+b),pb=t-pa;
+ const ha=(eq+pa)/2,hb=t-ha;
+ const ceil=x=>x*(1+buf/100);
+ $('sout').innerHTML=`<div class="row"><span>Alone, together</span><b>${money(a+b)}</b></div>
+ <div class="row"><span>Shared ride total</span><b>${money(t)}</b></div>
+ <div class="row"><span>Total saved</span><b style="color:var(--acc2)">${money(a+b-t)}</b></div>
+ <div class="row"><span>Even split</span><span>${money(eq)} / ${money(eq)}</span></div>
+ <div class="row"><span>Pure proportional</span><span>${money(pa)} / ${money(pb)}</span></div>
+ <div class="row"><b>Sputnik hybrid</b><b>A ${money(ha)} · B ${money(hb)}</b></div>
+ <div class="row"><span>Authorization cap</span><span>A ${money(ceil(ha))} · B ${money(ceil(hb))}</span></div>
+ <p class="note">Why? A rides farther, so A pays a bit more — but never by enough to feel nickel-and-dimed. If the final fare would exceed a cap, both riders approve first.</p>`;
+}
+['sa','sb','st','sbuf'].forEach(i=>$(i).addEventListener('input',split));split();
+
+function ev(){
+ const [n,v,z,u,s,k]=$('ev').value.split('|');
+ $('evo').innerHTML=`<div class="row"><span>${n} lets out at ${v}</span><span>Uber now: <b>$${u}</b></span></div>
+ <div class="row"><span>${k} riders heading toward ${z}</span><span>Sputnik: <b style="color:var(--acc2)">~$${s}</b></span></div>
+ <div class="row"><span>Walk to pickup zone</span><span>🚶 4 min</span></div>
+ <div class="bar"><i id="bf"></i></div><p class="note">Group fills as more people nearby tap in (demo).</p>`;
+ setTimeout(()=>{const f=$('bf');if(f)f.style.width=Math.min(95,30+k*12)+'%'},50);
+}
+$('ev').addEventListener('change',ev);ev();
+
+$('go').onclick=()=>{
+ const e=$('em').value.trim();
+ $('jm').textContent=/^\S+@\S+\.\S+$/.test(e)?"You're on the list (demo only, nothing was sent).":"Please enter a valid email.";
+};
+</script>
+</body>
+</html>
